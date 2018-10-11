@@ -5,5 +5,6 @@ To install run
 cfy install \
     https://github.com/rajalokan/cloudify-tickstack-blueprints/archive/master.zip \
     --blueprint-filename openstack.yaml \
-    --blueprint-id tickstack
+    --blueprint-id tickstack \
+    --inputs server_name=tickstack
 ```
