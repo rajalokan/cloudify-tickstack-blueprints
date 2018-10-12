@@ -14,10 +14,9 @@ EOF
 ctx logger info "Installing and Configuring influxdb"
 sudo yum install -y influxdb
 sudo systemctl start influxdb
+USERNAME='rajalokan'
 PASSWORD='rajalokan'
-influx
-CREATE USER "rajalokan" WITH PASSWORD 'rajalokan' WITH ALL PRIVILEGES
-exit
+influx -execute "CREATE USER \"${USERNAME}\" WITH PASSWORD '${PASSWORD}' WITH ALL PRIVILEGES"
 # Enable auth in influxdb
 sudo sed -i '/^\[http\]$/,/^\[/ s/^  # auth-enabled =.*/  auth-enabled = true/' /etc/influxdb/influxdb.conf
 
