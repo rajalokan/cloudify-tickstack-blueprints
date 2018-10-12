@@ -62,6 +62,8 @@ node_templates:
         target: port
       - type: cloudify.openstack.server_connected_to_security_group
         target: security_group
+      - type: cloudify.openstack.server_connected_to_floating_ip
+        target: floating_ip
       - type: cloudify.relationships.contained_in
         target: node_scaling_tier
 
@@ -79,6 +81,16 @@ node_templates:
     relationships:
       - type: cloudify.relationships.connected_to
         target: public_network
+      - type: cloudify.relationships.contained_in
+        target: node_scaling_tier
+
+  floating_ip:
+    type: cloudify.openstack.nodes.FloatingIP
+    properties:
+      openstack_config: *openstack_config
+      floatingip:
+        floating_network_name: { get_secret: external_network_name }
+    relationships:
       - type: cloudify.relationships.contained_in
         target: node_scaling_tier
 
