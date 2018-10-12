@@ -25,7 +25,7 @@ dsl_definitions:
   openstack_config: &openstack_config
     username: { get_secret: keystone_username }
     password: { get_secret: keystone_password }
-    auth_url: { get_secret: keystone_url }
+    auth_url: { get_secret: keystone_auth_url }
     user_domain_name: { get_secret: keystone_user_domain_name }
     project_name: { get_secret: keystone_project_name }
     project_domain_name: { get_secret: keystone_project_domain_name }
