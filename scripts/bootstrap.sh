@@ -19,6 +19,7 @@ PASSWORD='rajalokan'
 influx -execute "CREATE USER \"${USERNAME}\" WITH PASSWORD '${PASSWORD}' WITH ALL PRIVILEGES"
 # Enable auth in influxdb
 sudo sed -i '/^\[http\]$/,/^\[/ s/^  # auth-enabled =.*/  auth-enabled = true/' /etc/influxdb/influxdb.conf
+sudo systemctl restart influxdb
 
 ctx logger info "Installing and Configuring Kapacitor"
 sudo yum install -y kapacitor
