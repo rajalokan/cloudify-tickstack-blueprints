@@ -14,6 +14,7 @@ EOF
 ctx logger info "Installing and Configuring influxdb"
 sudo yum install -y influxdb
 sudo systemctl start influxdb
+sleep 3
 USERNAME='rajalokan'
 PASSWORD='rajalokan'
 influx -execute "CREATE USER \"${USERNAME}\" WITH PASSWORD '${PASSWORD}' WITH ALL PRIVILEGES"
