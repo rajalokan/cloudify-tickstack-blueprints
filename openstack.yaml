@@ -123,3 +123,5 @@ policies:
 outputs:
   private_ip:
     value: { get_attribute: [ port, fixed_ip_address ] }
+  public_ip:
+    value: { get_attribute: [ floating_ip, floating_ip_address ] }
