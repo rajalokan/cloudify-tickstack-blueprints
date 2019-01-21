@@ -1,6 +1,16 @@
 #! /bin/bash -e
 
-ctx logger info "Bootstrapping TickStack node"
+ctx logger info "Bootstrapping Tickstack"
+sudo apt install -y wget || sudo yum install -y wget
+
+if [[ ! -f /tmp/sclib.sh ]]; then
+    wget -q https://raw.githubusercontent.com/rajalokan/okanstack/master/sclib.sh -O /tmp/sclib.sh
+fi
+source /tmp/sclib.sh
+
+# Preconfigure the instance
+_preconfigure_instance tickstack
+
 ctx logger info "Adding influx repo"
 cat <<EOF | sudo tee /etc/yum.repos.d/influxdb.repo
 [influxdb]
