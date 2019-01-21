@@ -61,13 +61,33 @@ node_templates:
       - type: cloudify.openstack.server_connected_to_port
         target: port
       - type: cloudify.openstack.server_connected_to_security_group
-        target: security_group
+        target: default_security_group
+      - type: cloudify.openstack.server_connected_to_security_group
+        target: tickstack_security_group
       - type: cloudify.openstack.server_connected_to_floating_ip
         target: floating_ip
       - type: cloudify.relationships.contained_in
         target: node_scaling_tier
 
-  security_group:
+  tickstack_security_group:
+    type: cloudify.openstack.nodes.SecurityGroup
+    properties:
+      openstack_config: *openstack_config
+      use_external_resource: true
+      create_if_missing: true
+      resource_id: tickstack
+      disable_default_egress_rules: true
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 8888
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 3000
+
+  default_security_group:
     type: cloudify.openstack.nodes.SecurityGroup
     properties:
       openstack_config: *openstack_config

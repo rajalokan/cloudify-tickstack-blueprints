@@ -25,8 +25,8 @@ sudo systemctl restart influxdb
 ctx logger info "Installing and Configuring Kapacitor"
 sudo yum install -y kapacitor
 # Update influxdb details in kapacitor config
-sudo sed -i '/^\[\[influxdb\]\]$/,/^\[/ s/^  username =.*/  username = \"rajalokan\"/' /etc/kapacitor/kapacitor.conf
-sudo sed -i '/^\[\[influxdb\]\]$/,/^\[/ s/^  password =.*/  password = \"rajalokan\"/' /etc/kapacitor/kapacitor.conf
+sudo sed -i "/^\[\[influxdb\]\]$/,/^\[/ s/^  username =.*/  username = \'${USERNAME}\'/" /etc/kapacitor/kapacitor.conf
+sudo sed -i "/^\[\[influxdb\]\]$/,/^\[/ s/^  password =.*/  password = \'${PASSWORD}\'/" /etc/kapacitor/kapacitor.conf
 sudo systemctl daemon-reload
 sudo systemctl start kapacitor
 
@@ -39,6 +39,12 @@ sudo yum install -y telegraf
 # Update influx db config in telegraf
 sudo sed -i '/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # urls =.*http.*/  urls = \[\"http:\/\/localhost:8086\"\]/' /etc/telegraf/telegraf.conf
 sudo sed -i '/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # database =.*/  database = \"telegraf\"/' /etc/telegraf/telegraf.conf
-sudo sed -i '/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # username =.*/  username = \"rajalokan\"/' /etc/telegraf/telegraf.conf
-sudo sed -i '/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # password =.*/  password = \"rajalokan\"/' /etc/telegraf/telegraf.conf
+sudo sed -i "/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # username =.*/  username = \'${USERNAME}\'/" /etc/telegraf/telegraf.conf
+sudo sed -i "/^\[\[outputs.influxdb\]\]$/,/^\[/ s/^  # password =.*/  password = \'${PASSWORD}\'/" /etc/telegraf/telegraf.conf
 sudo systemctl start telegraf
+
+# Install Grafana
+ctx logger info "Installing and Configuring Grafana"
+wget https://dl.grafana.com/oss/release/grafana-5.4.3-1.x86_64.rpm -O /tmp/grafana.rpm
+cd /tmp/ && sudo yum localinstall -y grafana.rpm
+sudo systemctl start grafana-server
